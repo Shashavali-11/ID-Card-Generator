@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ID Card Generator</title>
+
+    <style>
+      /* Body Styling */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa; /* Light gray background */
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      h1 {
+        color: #333;
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+
+      /* Input Form Styling */
+      #ipfrm {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        margin-bottom: 25px;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      #ipfrm input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
+      #ipfrm button {
+        width: 100%;
+        background-color: #007bff;
+        color: #fff;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+
+      #ipfrm button:hover {
+        background-color: #0056b3;
+      }
+
+      /* ID Card Styling */
+      #idcard {
+        display: none;
+        background: linear-gradient(135deg, #dfe9f3, #ffffff);
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        width: 350px;
+        padding: 20px;
+        border: 2px solid #007bff;
+        position: relative;
+      }
+
+      #idcard:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('https://via.placeholder.com/350x200?text=Background') no-repeat center;
+        background-size: cover;
+        opacity: 0.1;
+        border-radius: 15px;
+      }
+
+      #c1 {
+        font-size: 22px;
+        font-weight: bold;
+        color: #000;
+        margin-bottom: 20px;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.6);
+        padding-bottom: 10px;
+      }
+
+      #c2 img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 4px solid #007bff;
+        margin-bottom: 20px;
+        background-color: #ffffff;
+      }
+
+      #c3 {
+        font-size: 16px;
+        color: #000;
+        text-align: left;
+        margin-bottom: 10px;
+        line-height: 1.6;
+      }
+
+      #c3 p {
+        margin: 8px 0;
+      }
+
+      #c4 {
+        font-size: 15px;
+        color: #000;
+        font-weight: bold;
+        border-top: 1px solid rgba(0, 0, 0, 0.6);
+        padding-top: 10px;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 600px) {
+        #idcard {
+          width: 90%;
+        }
+        #ipfrm {
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Id Card Generator</h1>
+    <div id="ipfrm">
+      <input
+        type="text"
+        id="institute"
+        placeholder="Enter Institute Name"
+      /><br />
+      <input type="url" name="" id="image" placeholder="Image URL" /><br />
+      <input type="text" id="name" placeholder="Enter Name" /><br />
+      <input type="date" id="dob" /><br />
+      <input type="text" id="place" placeholder="Enter Place" /><br />
+      <input type="text" id="blood" placeholder="Enter Blood Group" /><br />
+      <input type="text" id="address" placeholder="Enter Address" /><br />
+
+      <button id="btn">Generate ID Card</button>
+    </div>
+
+    <div id="idcard">
+      <div id="c1"></div>
+
+      <div id="c2">
+        <!-- <img src="" alt=""> -->
+      </div>
+
+      <div id="c3"></div>
+      <hr />
+
+      <div id="c4"></div>
+    </div>
+
+    <script>
+      let btn = document.getElementById("btn");
+      btn.addEventListener("click", generateidcard);
+
+      let p = document.createElement("p");
+      p.textContent = "Fill All Require Details.";
+      function generateidcard() {
+        let instituteip = document.getElementById("institute").value;
+        let imgageip = document.getElementById("image").value;
+        let nameip = document.getElementById("name").value;
+        let dobip = document.getElementById("dob").value;
+        let placeip = document.getElementById("place").value;
+        let bloodip = document.getElementById("blood").value;
+        let addressip = document.getElementById("address").value;
+
+        let idcard = document.getElementById("idcard");
+
+        if (
+          !instituteip ||
+          !nameip ||
+          !dobip ||
+          !placeip ||
+          !bloodip ||
+          !addressip
+        ) {
+          idcard.appendChild(p);
+        }
+        // Populate ID card------------------>
+        // Institute Name(1)
+        document.getElementById("c1").textContent = instituteip;
+
+        // Image Section (2)
+        let imgsec = document.getElementById("c2");
+        let imge = document.createElement("img");
+        imge.src = imgageip;
+        imgsec.appendChild(imge);
+
+        // Details Section (3)
+        let detailsSec = document.getElementById("c3");
+        detailsSec.innerHTML = `
+                <p> <strong>Name : </strong> ${nameip} </p>
+                <p> <strong>Date of Birth : </strong> ${dobip} </p>
+                <p> <strong>Place : </strong> ${placeip} </p>
+                <p> <strong>Blood Group : </strong> ${bloodip} </p>
+                <p> <strong>Address : </strong> ${addressip} </p>
+            `;
+
+        // Address Section (4)
+        let addresssec = document.getElementById("c4");
+        addresssec.innerHTML = `<p><strong>Address :</strong> ${addressip}`;
+
+        idcard.style.display = "block";
+      }
+    </script>
+  </body>
+</html>
